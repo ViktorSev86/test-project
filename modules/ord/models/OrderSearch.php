@@ -45,6 +45,14 @@ class OrderSearch extends Order
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 100,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC, 
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -66,7 +74,7 @@ class OrderSearch extends Order
             'mode' => $this->mode,
         ]);
 
-        $query->andFilterWhere(['like', 'link', $this->link]);
+        //$query->andFilterWhere(['like', 'link', $this->link]);
 
         return $dataProvider;
     }

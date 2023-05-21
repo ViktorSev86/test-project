@@ -20,7 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>   
         <?= Html::a('All Orders', ['index']) ?> 
-        <?= Html::a('Prompt', ['index', 'OrderSearch[status]' => '1']) ?> 
+        <?= Html::a('Prompt', ['index', 'OrderSearch[status]' => '1']) ?>
+        <?= Html::a('In progress', ['index', 'OrderSearch[status]' => '2']) ?>
+        <?= Html::a('Completed', ['index', 'OrderSearch[status]' => '3']) ?> 
+        <?= Html::a('Canceled', ['index', 'OrderSearch[status]' => '4']) ?> 
+        <?= Html::a('Error', ['index', 'OrderSearch[status]' => '5']) ?> 
     </p>
 
     <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,20 +34,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
-            'user_id',
-            'link',
-            'quantity',
             [
+                'header' => 'ID',
+                'attribute'=>'id',
+            ],
+            [
+                'header' => 'User',
+                'attribute'=>'user_id',
+            ],
+            [
+                'header' => 'Link',
+                'attribute'=>'link',
+            ],
+            [
+                'header' => 'Quantity',
+                'attribute'=>'quantity',
+            ],
+            [
+                'header' => 'Service',
                 'attribute'=>'service_id',
                 'filter' => ['' => 'All', '0' => 'да', '1' => 'нет'],
             ],
-            'status',
+            [
+                'header' => 'Status',
+                'attribute'=>'status',
+                'filter' => false,
+            ],
             [   'header' => '__Mode__',
                 'attribute' => 'mode',
-                'filter' => ['' => 'All', '0' => 'да', '1' => 'нет'],
+                'filter' => ['' => 'All', '0' => 'Manual', '1' => 'Auto'],
             ],
             [
+                'header' => 'Created',
                 'attribute'=>'created_at',
             ],
             /*
