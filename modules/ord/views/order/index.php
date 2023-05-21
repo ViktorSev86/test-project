@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use kartik\tree\TreeViewInput;
 
 /** @var yii\web\View $this */
 /** @var app\modules\ord\models\OrderSearch $searchModel */
@@ -15,6 +16,8 @@ $this->title = 'Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
+
+    <?php var_dump($countServices[1]['cnt']); ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -34,13 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            
             [
                 'header' => 'ID',
                 'attribute'=>'id',
             ],
             [
                 'header' => 'User',
-                'attribute'=>'user_id',
+                'attribute' => 'users.last_name',
             ],
             [
                 'header' => 'Link',
@@ -52,8 +56,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'header' => 'Service',
-                'attribute'=>'service_id',
-                'filter' => ['' => 'All', '0' => 'да', '1' => 'нет'],
+                'attribute' => 'service_id',
+                'content' => function($data) use ($countServices, $filterService) {
+                    $services = \app\modules\ord\models\Services::find()->all();
+                    //var_dump($services);
+                    //var_dump$services = \app\modules\ord\models\Services::find();($services['id']);
+                    //return '<span style="border:1px #777777 solid;">' . $countServices[$data['service_id']-1]['cnt'] . '</span>' . $services[$data['service_id']-1]['name'] ;
+                    return $filterService[$data['service_id']-1];
+                },
+                'filter' => $filterService,
             ],
             [
                 'header' => 'Status',

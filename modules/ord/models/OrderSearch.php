@@ -42,6 +42,7 @@ class OrderSearch extends Order
         $query = Order::find()->innerJoinWith('users', true)->innerJoinWith('services', true);
 
 
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

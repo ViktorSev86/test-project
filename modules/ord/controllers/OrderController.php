@@ -2,11 +2,14 @@
 
 namespace app\modules\ord\controllers;
 
+use Yii;
 use app\modules\ord\models\Order;
+use app\modules\ord\models\Services;
 use app\modules\ord\models\OrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -40,11 +43,17 @@ class OrderController extends Controller
     {
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        //$countServices = (new \yii\db\Query())->select(['name','COUNT(*) as cnt'])->from('services')->groupBy(['name'])->all();
+        $countServices = Yii::$app->db->createCommand('SELECT service_id, COUNT(*) as cnt FROM orders GROUP BY service_id')->queryAll();
+        //var_dump($countServices);
+        $services = Services::find()->all();
+        //var_dump($services)
+        $filterService = [];
+        for ($i = 0; $i < count($countServices); $i++) {
+            array_push($filterService, '|' . $countServices[$i]['cnt'] . '|' . $services[$countServices[$i]['service_id']-1]['name']);
+        }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index', compact('searchModel', 'dataProvider', 'countServices', 'filterService'));
     }
 
     /**
