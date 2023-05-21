@@ -54,4 +54,12 @@ class Order extends \yii\db\ActiveRecord
             'mode' => 'Mode',
         ];
     }
+
+    public function getUsers() {
+        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+    } 
+
+    public function getServices() {
+        return $this->hasOne(Services::className(), ['id' => 'service_id']);
+    } 
 }

@@ -39,7 +39,8 @@ class OrderSearch extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = Order::find()->innerJoinWith('users', true)->innerJoinWith('services', true);
+
 
         // add conditions that should always apply here
 
