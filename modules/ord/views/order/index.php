@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
 
-    <?php var_dump($countServices[1]['cnt']); ?>
+    <?php var_dump($filterService); ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     //var_dump($services);
                     //var_dump$services = \app\modules\ord\models\Services::find();($services['id']);
                     //return '<span style="border:1px #777777 solid;">' . $countServices[$data['service_id']-1]['cnt'] . '</span>' . $services[$data['service_id']-1]['name'] ;
-                    return $filterService[$data['service_id']-1];
+                    return $filterService[$data['service_id']];
                 },
                 'filter' => $filterService,
             ],

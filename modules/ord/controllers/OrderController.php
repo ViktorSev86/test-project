@@ -49,8 +49,8 @@ class OrderController extends Controller
         $services = Services::find()->all();
         //var_dump($services)
         $filterService = [];
-        for ($i = 0; $i < count($countServices); $i++) {
-            array_push($filterService, '|' . $countServices[$i]['cnt'] . '|' . $services[$countServices[$i]['service_id']-1]['name']);
+        for ($i = 0; $i <= count($services); $i++) {
+            $filterService[$i] = '|' . $countServices[$i]['cnt'] . '|' . $services[$countServices[$i]['service_id']-1]['name'];
         }
 
         return $this->render('index', compact('searchModel', 'dataProvider', 'countServices', 'filterService'));
